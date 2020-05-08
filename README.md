@@ -11,7 +11,7 @@ git clone https://github.com/NurbayevNT/HelloServlet
 сd HelloServlet
 ```
 
-1.3 Собираем проект с помощьюу Maven: 
+1.3 Собираем проект с помощью Maven: 
 ```bash
 mvn package
 ```
@@ -23,4 +23,4 @@ mvn tomcat7:run -X
 ```bash
 http://localhost:8080/HelloServlet/
 ```
-1.6 Дя замены слова в базе, просто введите его в командную строку приложения. 
+1.6 Для замены слова в базе, просто введите его в командную строку приложения. 
