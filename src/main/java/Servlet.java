@@ -4,6 +4,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -36,18 +37,38 @@ public class Servlet extends HttpServlet {
                 stmt.execute(query);
                 System.out.println("Table created");
             } catch (Exception e) {
-                System.out.println("ALREADY CREATED");
+                System.out.println("TABLE ALREADY CREATED");
             }
-            try{
+            try {
                 stmt.execute("INSERT INTO HELLOTABLE VALUES('mainWord','HelloWorld!')");
-                System.out.println("Word inserted");
-            }catch (Exception e){
-                stmt.execute("UPDATE HELLOTABLE SET value='Hello' WHERE word='mainWord'");
-                System.out.println("Word updated");
+                System.out.println("The Server is ready! If you want to change the word just input new one in command line.");
+            } catch (Exception e) {
+                stmt.execute("UPDATE HELLOTABLE SET value='HelloWorld!' WHERE word='mainWord'");
+                System.out.println("The Server is ready! If you want to change the word just input new one in command line.");
             }
         } catch (Exception e) {
             System.out.println(e.toString());
         }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Scanner inputReader = new Scanner(System.in);
+                while (true) {
+
+                    if (inputReader.hasNext()) {
+                        try {
+                            String s = inputReader.nextLine();
+                            if (s.trim().length() > 0) {
+                                stmt.execute("UPDATE HELLOTABLE SET value='" + s + "' WHERE word='mainWord'");
+                                System.out.println("Word changed to " + s + ". Please, reload page!");
+                            }
+                        } catch (Exception e) {
+                        }
+                    }
+                }
+            }
+        }).start();
+
     }
 
 
@@ -59,12 +80,11 @@ public class Servlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             JSONObject jsonEnt = new JSONObject();
 
-                String query = "SELECT * FROM HELLOTABLE WHERE word='mainWord'";
-                ResultSet rs = stmt.executeQuery(query);
-                rs.next();
-                String word = rs.getString("value");
-                System.out.println("word: "+word);
-                jsonEnt.put("serverInfo", word);
+            String query = "SELECT * FROM HELLOTABLE WHERE word='mainWord'";
+            ResultSet rs = stmt.executeQuery(query);
+            rs.next();
+            String word = rs.getString("value");
+            jsonEnt.put("serverInfo", word);
 
             out.print(jsonEnt.toString());
         } catch (Exception e) {
@@ -94,6 +114,5 @@ public class Servlet extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }//
-
+    }
 }
