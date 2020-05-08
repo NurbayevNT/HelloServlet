@@ -1,7 +1,7 @@
 # HelloServlet
 
 
-1.1 Скачайте репозиторий с  помощью данной команды: 
+1.1 Скачиваем репозиторий с  помощью данной команды: 
 ```bash
 git clone https://github.com/NurbayevNT/HelloServlet
 ```
@@ -11,11 +11,11 @@ git clone https://github.com/NurbayevNT/HelloServlet
 сd HelloServlet
 ```
 
-1.3 Сборка проекта с помощьюу Maven: 
+1.3 Собираем проект с помощьюу Maven: 
 ```bash
 mvn package
 ```
-1.4 Запуск: 
+1.4 Запускаем: 
 ```bash
 mvn tomcat7:run -X
 ```
@@ -23,4 +23,4 @@ mvn tomcat7:run -X
 ```bash
 http://localhost:8080/HelloServlet/
 ```
-1.6 Если вы хотите заменить слово на новое, то просто введите его в командную строку приложения. 
+1.6 Дя замены слова в базе, просто введите его в командную строку приложения. 
